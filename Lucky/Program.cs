@@ -151,28 +151,6 @@ namespace Lucky
                     return;
                 }
             }
-            
-            
-
-
-
-
-
-
-
-            //double[] shoeSize = new double[numSizes];
-            //Console.WriteLine(shoeSize.Length);
-            //for (int i = 0; i < shoeSize.Length; i++)
-            //{
-            //    Console.WriteLine(i);
-            //    Console.WriteLine(numSizes);
-            //    Console.WriteLine("Please enter a shoe size.");
-            //    shoeSize[i] = double.Parse(Console.ReadLine());
-        } // for loop
-         //   Console.WriteLine("Play again?");
-         //   exitresp = Console.ReadLine().ToLower();
-        } // while
-    } // main
- // program
-
-
+        } // main
+      } // Program
+    } // namespace
