@@ -23,10 +23,8 @@ namespace Lucky
 
 
 
-            // Instantiante two int arrays with six index locations
 
-            int[] randomNums = new int[6]; // array for randomly generated numbers
-            int[] userNums = new int[6]; // array for user's guessed numbers
+
 
             // Strings for output to UI variables
 
@@ -34,58 +32,52 @@ namespace Lucky
             string askToPlay = ("Do you want to play? The jackpot is $" + jackpot + "."); // String asks to play and presents jackpot
             string askLowValue = ("Enter a starting number."); // Ask for starting number
             string askHighValue = ("Enter an ending number that is higher than your starting number."); // Ask for ending number
+            string thanks = ("Thanks for playing!"); // Exit response
+            string askAgain = ("Play again?"); // Ask to play again
+            
+            // Strings for UI input
 
+            string replay; // User input string for if playing again or not
+            string exitResp; // User input string for initial ask about playing
 
-
-
-            string exitresp; // Exit response
-            string again; // Play again
-
-
-            Console.Write(welcome);
-            Console.WriteLine(askToPlay);
-            exitresp = Console.ReadLine().ToLower();
-            while (exitresp.Equals("yes"))
+            // Welcome user and ask to play
+            
+            Console.Write(welcome); // Output welcome string
+            Console.WriteLine(askToPlay); // Ask if user wants to play
+            exitResp = Console.ReadLine().ToLower(); // Accepts user input, converts to lowercase and stores to exitResp string
+            while (exitResp.Equals("yes")) // If user responds "yes" then proceed to start game
             {
-                Console.WriteLine(askLowValue);
-                lowValue = int.Parse(Console.ReadLine());
-                Console.WriteLine(askHighValue);
-                highValue = int.Parse(Console.ReadLine());
+                // Instantiante user input and random arrays with index lengths of 6
+                int[] randomNums = new int[6]; // array for randomly generated numbers
+                int[] userNums = new int[6]; // array for user's guessed numbers
+
+
+
+                // Asks for low and high values, saves them to lowValue and HighValue integers
+                Console.WriteLine(askLowValue); // Outputs message asking for low value
+                lowValue = int.Parse(Console.ReadLine()); // Accepts integer from user and stores to lowValue
+                Console.WriteLine(askHighValue); // Outputs message asking for high value
+                highValue = int.Parse(Console.ReadLine()); // Accepts integer from user and stores to highValue
 
                 Random randNum = new Random(); // Create randNum variable
                 int highValuePlusOne = highValue + 1; // Initialize highValuePlusOne and declare value of highValue +1 to correct for top range
 
+                // Loop to accept guess in userGuess then populate to userNums array with user's guessed numbers
 
-                // Test display of values (low, high plus one, and single random number within the range)
-                //Console.WriteLine(lowValue); // Test display of low value
-                //Console.WriteLine(highValuePlusOne); // Test display of high value plus one
-                //Console.WriteLine(randNum.Next(lowValue, highValuePlusOne)); // Output random number to console
-
-
-
-
-
-                for (int i = 0; i < userNums.Length; i++) // Loop to accept guess in userGuess then send to userNums array with guessed numbers
+                for (int i = 0; i < userNums.Length; i++) // Increments through length of userNums index
                 {
                     Console.WriteLine("Guess a number between " + lowValue + " and " + highValue + "."); // Use concatenated string to ask for guess between lowValue and highValue
                     userGuess = int.Parse(Console.ReadLine()); // Accept user's guess from console and set userGuess to that value
                         while (userNums.Contains(userGuess)) // Checks userNums to see if userGuess duplicates the value
 
                         {
-                            Console.WriteLine("You can't guess the same number twice! Guess again.");
+                            Console.WriteLine("You can't guess the same number twice! Guess again."); // Outputs message that guess is outside the range
                             userGuess = int.Parse(Console.ReadLine()); // Accept user input from console and write to userGuess
                         }
 
                     userNums[i] = userGuess; // Populate userNums array with userGuess
 
-
-                    //while (dupCheck == true)
-
-                    //{
-                    //    Console.WriteLine("You can't guess the same number twice! Guess again.");
-                    //    userGuess = int.Parse(Console.ReadLine()); // Accept user input from console and write to userGuess
-                    //}
-
+                    // Checks userGuess against their range
 
                     while (userGuess < lowValue || userGuess > highValue) // Check to see if userGuess is within the range of lowValue and highValue
                     {
@@ -93,61 +85,53 @@ namespace Lucky
                         userGuess = int.Parse(Console.ReadLine()); // Accept user input from console and write to userGuess
                     }
 
-                    //// Check for duplicate guess
-
-                    //bool dupCheck = userNums.Contains(userGuess);
-
-                    //while (dupCheck == true)
-                    
-                    //{
-                    //    Console.WriteLine("You can't guess the same number twice! Guess again.");
-                    //    userGuess = int.Parse(Console.ReadLine()); // Accept user input from console and write to userGuess
-                    //}
+                // Generate random numbers and compare against user generated numbers
 
                 }
 
                 for (int i = 0; i < randomNums.Length; i++) // For loop to populate randomNums array with randomly generated numbers for the length of randNums (six iterations)
                 {
                     randomNums[i] = randNum.Next(lowValue, highValuePlusOne); // Generates random numbers from lowValue and highValuePlusOne and populates the randNum array
-                                                                              // if (userNums[i] == randomNums[i]) checks match against same index position
-                    for (int j = 0; j < randomNums.Length; j++)
+                                                                              
+                    for (int j = 0; j < randomNums.Length; j++) // Increments through length of randomNums array
                     {
-                        if (randomNums[i] == userNums[j])
+                        if (randomNums[i] == userNums[j]) // If a match is found between randomNums and userNums array...
                         {
-                            matches++;
+                            matches++;                    // Increment matches integer by one.
                         }
                     }
 
-                    // {
-                    //    if (randomNums.Contains(userNums))
-                    // }
 
-                    //while (userNums.Contains(userGuess))
-
-                    // {
-                    //    matches ++;
-                    // }
                     Console.WriteLine("Lucky Number: " + randomNums[i]); // Outputs lucky numbers to console
 
 
 
-                    // Count matches betwen randomNums and userNums
-                    
+                 // Count matches betwen randomNums and userNums
                     
                 }
 
                 Console.WriteLine("You guessed " + matches + " correctly."); // Output number of matches
                 double winnings = (jackpot / 6) * matches; // calculates winnings
-                Console.WriteLine("Your total winnings are $" + winnings + ".");
-                Array.Clear(userNums, 0, userNums.Length); // Resets arrary, found on dotnetpearls -- couldn't find another way to do this
+                Console.WriteLine("Your total winnings are $" + winnings + "."); // Output total winnings amount
+
+                // Reset values
+
                 matches = 0; // reset value of matches
+                lowValue = 0; // reset lowValue
+                highValue = 0; // reset highValue
+                highValuePlusOne = 0; // reset highValuePlusOne
+                userGuess = 0; // reset userGuess
+                matches = 0; // reset number of matched numbers
+                // Array.Clear(userNums, 0, userNums.Length); // Found this on dotnetpearls as a way to reset arrays but we haven't been given this tool yet. Should re-instantiatie when the program loops though.
 
-                Console.WriteLine("Play again?");
-                again = Console.ReadLine().ToLower();
+                // Ask aobut playing again. Exit if user responds "no"
 
-                while (again.Equals("no"))
+                Console.WriteLine(askAgain); // Ask about playing
+                replay = Console.ReadLine().ToLower(); //  Take user input
+
+                while (replay.Equals("no"))
                 {
-                    Console.WriteLine("Thanks for playing!");
+                    Console.WriteLine(thanks); // Output thank you message
                     return;
                 }
             }
